@@ -38,7 +38,10 @@ function VehiculoPage() {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+    setForm((prev) => ({
+      ...prev,
+      [name]: name === "precioDia" ? Number(value) : value,
+    }));
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -138,30 +141,32 @@ function VehiculoPage() {
         <div>
           <label htmlFor="precioDia">PrecioDia:</label>
           <input
-            type="text"
+            type="number"
             id="precioDia"
             name="precioDia"
             value={form.precioDia}
             onChange={handleChange}
+            min={0}
+            step="0.01"
           />
         </div>
         <button type="submit">Guardar</button>
       </form>
-      <h2>Listado de Categorías</h2>
+      <h2>Listado de Vehiculos</h2>
       <table>
         <thead>
           <tr>
             <th>Placa</th>
             <th>Marca</th>
             <th>Modelo</th>
-            <th>C0lor</th>
+            <th>Color</th>
             <th>PrecioDia</th>
             <th>Modificar</th>
-            <th>Eliminar</th>
+            <th>Anular</th>
           </tr>
         </thead>
         <tbody>
-          {Array.isArray(vehiculos) && vehiculos.map((vehiculo) => (
+          {vehiculos.map((vehiculo) => (
             <tr key={vehiculo.idVehiculo}>
               <td>{vehiculo.placa}</td>
               <td>{vehiculo.marca}</td>
